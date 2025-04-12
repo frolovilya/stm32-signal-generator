@@ -1,11 +1,9 @@
 #ifndef ADCPERIPHERAL_HPP
 #define ADCPERIPHERAL_HPP
 
+#include "../sys/stm32f446xxTypes.hpp"
 #include "Peripheral.hpp"
 #include <cstdint>
-extern "C" {
-#include <stm32f446xx.h>
-}
 
 class ADCPeripheral : public Peripheral<ADC_TypeDef> {
 public:

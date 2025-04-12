@@ -15,14 +15,6 @@ void printUsageHelp() {
        << "](mV)\n";
 }
 
-void printCurrentSignalInfo(WaveForm waveForm, uint16_t frequency,
-                            uint16_t level) {
-  cout << "Generating " << waveFormToString(waveForm) << " " << frequency
-       << "Hz "
-       << " " << level << "mV"
-       << " signal\n";
-}
-
 std::tuple<WaveForm, uint16_t, uint16_t> parseCommand(std::string str) {
   std::istringstream iss(str);
   std::string item;

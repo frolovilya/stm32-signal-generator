@@ -1,11 +1,9 @@
 #ifndef DACPERIPHERAL_HPP
 #define DACPERIPHERAL_HPP
 
+#include "../sys/stm32f446xxTypes.hpp"
 #include "Peripheral.hpp"
 #include <cstdint>
-extern "C" {
-#include <stm32f446xx.h>
-}
 
 class DACPeripheral : public Peripheral<DAC_TypeDef> {
 public:

@@ -58,7 +58,7 @@ set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--print-memory-usage")
 set(CMAKE_PROJECT_NAME stm32-wave-generator)
 
 # Core project settings
-project(${CMAKE_PROJECT_NAME} VERSION 0.1 LANGUAGES CXX)
+project(${CMAKE_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
 
 enable_language(C CXX ASM)
 
@@ -70,7 +70,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ./src/sys/sysmem.c
     ./src/sys/system_stm32f4xx.c
     ./src/sys/startup_stm32f446xx.s
-    
+
     ./src/signals/WaveForm.cpp
     ./src/signals/Frequency.cpp
     ./src/signals/Level.cpp
@@ -90,7 +90,7 @@ find_path(WELLE_HEADER_PATH Welle.hpp PATHS /usr/local/include)
 message("-- Welle Header: " ${WELLE_HEADER_PATH})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${WELLE_HEADER_PATH})
 
-if (USE_USART3)
+if(USE_USART3)
     message("Using USART3")
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         USE_USART3
@@ -98,6 +98,10 @@ if (USE_USART3)
 else()
     message("Using USART2")
 endif()
+
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+    EMBEDDED
+)
 
 add_subdirectory(drivers)
 
@@ -108,4 +112,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 # Upload ELF to the device
 add_custom_target(flash
     COMMAND ${PROGRAMMER_CLI}
-     -c port=swd -w $<TARGET_FILE:${CMAKE_PROJECT_NAME}> -v -rst)
+    -c port=swd -w $<TARGET_FILE:${CMAKE_PROJECT_NAME}> -v -rst)

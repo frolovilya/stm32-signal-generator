@@ -1,15 +1,24 @@
+#include "cmd/CommandParser.hpp"
 #include "peripherals/Peripherals.hpp"
 #include "signals/Frequency.hpp"
 #include "signals/Level.hpp"
 #include "signals/SignalFactory.hpp"
 #include "signals/WaveForm.hpp"
-#include "cmd/CommandParser.hpp"
+#include <iostream>
 #include <string>
 
 using namespace std;
 
 // Samples buffer
 vector<uint16_t> samples;
+
+void printCurrentSignalInfo(WaveForm waveForm, uint16_t frequency,
+                            uint16_t level) {
+  cout << "Generating " << waveFormToString(waveForm) << " " << frequency
+       << "Hz "
+       << " " << level << "mV"
+       << " signal\n";
+}
 
 void stream(WaveForm waveForm, uint16_t frequency, uint16_t level) {
   samples = generateSignalPeriod<uint16_t>(waveForm, frequency, level);

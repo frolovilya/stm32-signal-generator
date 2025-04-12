@@ -1,13 +1,11 @@
 #ifndef UARTPERIPHERAL_HPP
 #define UARTPERIPHERAL_HPP
 
+#include "../sys/stm32f446xxTypes.hpp"
 #include "Peripheral.hpp"
 #include <cstdlib>
 #include <functional>
 #include <string>
-extern "C" {
-#include <stm32f446xx.h>
-}
 
 using UART_RX_Handler = void(std::string str);
 
