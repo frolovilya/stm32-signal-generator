@@ -11,7 +11,7 @@ public:
   void start(uint16_t *dacBuffer, int dataLength);
   DAC_TypeDef *getPeripheral() const override;
   uint32_t getFrequency() const;
-  uint16_t getMaxValue() const;
+  uint16_t getMaxDigitalValue() const;
 
 private:
   void configureGPIOA();

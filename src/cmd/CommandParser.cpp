@@ -4,18 +4,17 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <tuple>
 #include <vector>
 
 using namespace std;
 
 void printUsageHelp() {
-  cout << "Usage: sine|square|saw|triangle [" << minWaveFrequency << ".."
-       << maxWaveFrequency << "](Hz) [" << minLevelMV << ".." << getMaxLevelMV()
+  cout << "Usage: sine|square|saw|triangle [" << minWaveFrequencyHz << ".."
+       << maxWaveFrequencyHz << "](Hz) [" << minLevelMV << ".." << getMaxLevelMV()
        << "](mV)\n";
 }
 
-std::tuple<WaveForm, uint16_t, uint16_t> parseCommand(std::string str) {
+Command parseCommand(const std::string str) {
   std::istringstream iss(str);
   std::string item;
   std::vector<std::string> splitString;
@@ -29,21 +28,23 @@ std::tuple<WaveForm, uint16_t, uint16_t> parseCommand(std::string str) {
   }
 
   WaveForm waveForm = stringToWaveForm(splitString[0]);
-  uint16_t frequency = stringToFrequency(splitString[1]);
-  uint16_t level = stringToLevel(splitString[2]);
+  uint16_t frequency = stringToFrequencyHz(splitString[1]);
+  uint16_t level = stringToLevelMV(splitString[2]);
 
   return {waveForm, frequency, level};
 }
 
-constexpr std::tuple<WaveForm, uint16_t, uint16_t> defaultCommand() {
-  return {defaultWaveForm, defaultWaveFrequency, defaultLevelMV};
+constexpr Command defaultCommand() {
+  return {defaultWaveForm, defaultWaveFrequencyHz, defaultLevelMV};
 }
 
-std::tuple<WaveForm, uint16_t, uint16_t> tryParseCommand(std::string str) {
+Command tryParseCommand(const std::string str) {
   try {
     return parseCommand(str);
-  } catch (const std::exception &) {
+  } catch (const std::exception &e) {
+    cout << e.what() << "\n";
     printUsageHelp();
+
     return defaultCommand();
   }
 }

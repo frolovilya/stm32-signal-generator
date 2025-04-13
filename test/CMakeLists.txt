@@ -15,9 +15,20 @@ add_executable(${CMAKE_PROJECT_NAME}
     TestModule.cpp
 
     mocks/DACPeripheralMock.cpp
+    mocks/ADCPeripheralMock.cpp
 
     FrequencyTest.cpp
     ../src/signals/Frequency.cpp
+
+    LevelTest.cpp
+    ../src/signals/Level.cpp
+
+    WaveFormTest.cpp
+    ../src/signals/WaveForm.cpp
+
+    CommandParserTest.cpp
+    ../src/cmd/CommandParser.cpp
+    ../src/cmd/Command.cpp
 )
 
 find_package(Boost 1.87.0 REQUIRED COMPONENTS unit_test_framework)

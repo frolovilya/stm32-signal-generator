@@ -1,21 +1,35 @@
 #include "Level.hpp"
+#include "../../shared/StringFormat.hpp"
 #include "../peripherals/Peripherals.hpp"
+#include <stdexcept>
 
-uint16_t getMaxLevelMV() {
-  return adcInstance.getVddaMV() / 2;
+uint16_t getMaxLevelMV() { return adcInstance.getVddaMV() / 2; }
+
+uint16_t getPeakToPeakDigitalValue(uint16_t signalLevelMV) {
+  return (double)signalLevelMV / getMaxLevelMV() *
+         dacInstance.getMaxDigitalValue();
 }
 
-uint16_t getPeakToPeak(uint16_t signalLevelMV) {
-  return signalLevelMV * 2 / getMaxLevelMV() * dacInstance.getMaxValue();
-}
+/**
+ * Convert string to level value in mV taking minLevelMV and
+ * maxLevelMV into account
+ *
+ * @param str input string to parse
+ * @return signal level in mV
+ */
+uint16_t stringToLevelMV(const std::string str) {
+  try {
+    int newLevelMV = std::stoi(str);
 
-uint16_t stringToLevel(const std::string str) {
-  int newLevelMV = std::stoi(str);
-  if (newLevelMV < minLevelMV) {
-    return minLevelMV;
+    if (newLevelMV < minLevelMV || newLevelMV > getMaxLevelMV()) {
+      throw std::invalid_argument("Out of range");
+    }
+
+    return static_cast<uint16_t>(newLevelMV);
+
+  } catch (const std::exception &e) {
+    throw std::invalid_argument(
+        stringFormat("Signal level must be in the range from %d to %d mV",
+                     minLevelMV, getMaxLevelMV()));
   }
-  if (newLevelMV > getMaxLevelMV()) {
-    return getMaxLevelMV();
-  }
-  return static_cast<uint16_t>(newLevelMV);
 }

@@ -13,8 +13,8 @@ std::vector<T> generateSignalPeriod(const WaveForm waveForm,
                                     const uint16_t frequency,
                                     const uint16_t signalLevelMV) {
 
-  const int samplingRate = getSamplingRate();
-  const uint16_t peakToPeak = getPeakToPeak(signalLevelMV);
+  const int samplingRate = getSamplingRateHz();
+  const uint16_t peakToPeak = getPeakToPeakDigitalValue(signalLevelMV);
   const double phaseShift = 0;
 
   switch (waveForm) {

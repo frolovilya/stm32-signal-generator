@@ -81,7 +81,7 @@ uint32_t DACPeripheral::getFrequency() const {
 }
 
 // Max signal amplitude (value) for 12-bit DAC
-uint16_t DACPeripheral::getMaxValue() const {
+uint16_t DACPeripheral::getMaxDigitalValue() const {
   return 0xfff;
 }
 

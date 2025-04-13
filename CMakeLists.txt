@@ -76,6 +76,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ./src/signals/Level.cpp
 
     ./src/cmd/CommandParser.cpp
+    ./src/cmd/Command.cpp
 
     ./src/peripherals/Peripherals.cpp
     ./src/peripherals/RCCPeripheral.cpp

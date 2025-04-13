@@ -4,11 +4,11 @@
 #include <cstdint>
 #include <string>
 
-constexpr uint16_t minWaveFrequency = 20;
-constexpr uint16_t maxWaveFrequency = 30000;
-constexpr uint16_t defaultWaveFrequency = 440;
+constexpr uint16_t minWaveFrequencyHz = 20;
+constexpr uint16_t maxWaveFrequencyHz = 30000;
+constexpr uint16_t defaultWaveFrequencyHz = 440;
 
-uint32_t getSamplingRate();
-uint16_t stringToFrequency(const std::string str);
+uint32_t getSamplingRateHz();
+uint16_t stringToFrequencyHz(const std::string str);
 
 #endif

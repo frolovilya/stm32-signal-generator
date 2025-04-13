@@ -4,20 +4,20 @@
 #include <format>
 #include <stdexcept>
 
-uint32_t getSamplingRate() { return dacInstance.getFrequency(); }
+uint32_t getSamplingRateHz() { return dacInstance.getFrequency(); }
 
 /**
  * Convert string to frequency input taking minWaveFrequency and
- * maxWaveFrequency into account
+ * maxWaveFrequencyHz into account
  *
  * @param str input string to parse
  * @return frequency
  */
-uint16_t stringToFrequency(const std::string str) {
+uint16_t stringToFrequencyHz(const std::string str) {
   try {
     int newFreq = std::stoi(str);
 
-    if (newFreq < minWaveFrequency || newFreq > maxWaveFrequency) {
+    if (newFreq < minWaveFrequencyHz || newFreq > maxWaveFrequencyHz) {
       throw std::invalid_argument("Out of range");
     }
 
@@ -26,6 +26,6 @@ uint16_t stringToFrequency(const std::string str) {
   } catch (const std::exception &) {
     throw std::invalid_argument(
         stringFormat("Frequency must be in the range from %d to %d Hz",
-                     minWaveFrequency, maxWaveFrequency));
+                     minWaveFrequencyHz, maxWaveFrequencyHz));
   }
 }

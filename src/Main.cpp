@@ -29,7 +29,7 @@ void stream(WaveForm waveForm, uint16_t frequency, uint16_t level) {
 
 void parseAndApplyCommand(std::string str) {
   const auto command = tryParseCommand(str);
-  stream(get<0>(command), get<1>(command), get<2>(command));
+  stream(command.waveForm, command.frequencyHz, command.levelMV);
 }
 
 UARTPeripheral *getUARTPeripheral() {
@@ -52,7 +52,7 @@ int main() {
 
   adcInstance.configure();
 
-  stream(defaultWaveForm, defaultWaveFrequency, defaultLevelMV);
+  stream(defaultWaveForm, defaultWaveFrequencyHz, defaultLevelMV);
 
   while (1) {
   }
