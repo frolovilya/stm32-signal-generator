@@ -4,6 +4,10 @@
 #include <format>
 #include <stdexcept>
 
+/**
+ * Returns DAC sampling rate in Hz: how many digital samples per second are
+ * converted to analog signal
+ */
 uint32_t getSamplingRateHz() { return dacInstance.getFrequency(); }
 
 /**

@@ -3,8 +3,14 @@
 #include "../shared/StringFormat.hpp"
 #include <stdexcept>
 
-uint16_t getMaxLevelMV() { return adcInstance.getVddaMV() / 2; }
+/**
+ * Max signal level in mV that the DAC is able to generate
+ */
+uint16_t getMaxLevelMV() { return (adcInstance.getVddaMV() - 200) / 2; }
 
+/**
+ * Get Peak-to-Peak (signal level in mV x2) value for DAC
+ */
 uint16_t getPeakToPeakDigitalValue(uint16_t signalLevelMV) {
   return (double)signalLevelMV / getMaxLevelMV() *
          dacInstance.getMaxDigitalValue();

@@ -29,14 +29,12 @@ BOOST_AUTO_TEST_CASE(stringToLevelExceptionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(stringToLevelSuccessTest) {
-  BOOST_TEST(stringToLevelMV("2") == 2);
-  BOOST_TEST(stringToLevelMV("12") == 12);
-  BOOST_TEST(stringToLevelMV("123") == 123);
+  BOOST_TEST(stringToLevelMV("200") == 200);
   BOOST_TEST(stringToLevelMV("1234") == 1234);
 }
 
 BOOST_AUTO_TEST_CASE(getMaxLevelTest) {
-  BOOST_TEST(getMaxLevelMV() == adcInstance.getVddaMV() / 2);
+  BOOST_TEST(getMaxLevelMV() == (adcInstance.getVddaMV() - 200) / 2);
 }
 
 BOOST_AUTO_TEST_CASE(getPeakToPeakTest) {

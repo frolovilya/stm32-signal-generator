@@ -13,11 +13,16 @@ std::string getUsageHelp() {
   return stringFormat("Expecting three arguments: WaveForm Frequency Level\n"
                       "Where WaveForm: sine|square|saw|triangle; Frequency, "
                       "Hz: %d..%d; Level, mV: %d..%d\n"
-                      "Example: sine 440 1000",
+                      "Example: %s %d %d",
                       minWaveFrequencyHz, maxWaveFrequencyHz, minLevelMV,
-                      getMaxLevelMV());
+                      getMaxLevelMV(),
+                      waveFormToString(defaultCommand.waveForm).c_str(),
+                      defaultCommand.frequencyHz, defaultCommand.levelMV);
 }
 
+/**
+ * Parse received string command into WaveForm, Frequency, Level
+ */
 Command parseCommand(const std::string str) {
   std::istringstream iss(str);
   std::string item;

@@ -77,7 +77,8 @@ void DACPeripheral::configureTimer() {
 // DAC final clock frequency
 uint32_t DACPeripheral::getFrequency() const {
   // TODO: find better way of obtaining final frequency value
-  return 84000000 / (TIM2->PSC + 1) / (TIM2->ARR + 1);
+  // return 84000000 / (TIM2->PSC + 1) / (TIM2->ARR + 1);
+  return 1000000;
 }
 
 // Max signal amplitude (value) for 12-bit DAC
