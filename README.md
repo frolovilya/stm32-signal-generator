@@ -48,7 +48,7 @@ Connect a capacitor to the DAC output pin to remove the DC offset and generate s
 # WaveForm Frequency(Hz) Level(mV)
 sine|square|saw|triangle 10..30000 200..1500LF
 ```
-Siganl level is given without DC offset. Note that `LF(\n)` at the end is required.
+Signal level is given without DC offset. Note that `LF(\n)` at the end is required.
 
 ### Sending Commands via Serial Port
 
