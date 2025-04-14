@@ -1,5 +1,5 @@
 #include "WaveForm.hpp"
-#include <stdexcept>
+#include "../shared/StringFormat.hpp"
 
 static const struct {
   WaveForm val;
@@ -24,7 +24,7 @@ std::string waveFormToString(const WaveForm waveForm) {
     }
   }
 
-  throw std::logic_error("Unable to convert WaveForm enum to string");
+  throw std::logic_error("Unable to convert WaveForm to string");
 }
 
 /**
@@ -35,13 +35,14 @@ std::string waveFormToString(const WaveForm waveForm) {
  * @return converted waveform or invalid_argument exception is thrown if no wave
  * form with such name found
  */
-WaveForm stringToWaveForm(const std::string str) {
+WaveForm stringToWaveForm(const std::string input) {
   for (unsigned int i = 0;
        i < sizeof(toStringConversion) / sizeof(toStringConversion[0]); i++) {
-    if (toStringConversion[i].str == str) {
+    if (toStringConversion[i].str == input) {
       return toStringConversion[i].val;
     }
   }
 
-  throw std::invalid_argument("Unable to convert string to WaveForm enum");
+  throw std::invalid_argument(
+      stringFormat("Unable to convert '%s' to WaveForm", input.c_str()));
 }

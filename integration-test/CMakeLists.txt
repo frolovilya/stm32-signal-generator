@@ -24,16 +24,11 @@ if(NOT DEFINED DIGITAL_RX_PIN)
 endif()
 message("Digital RX pin: " ${DIGITAL_RX_PIN})
 
-project(integration-tests VERSION 0.1 LANGUAGES CXX)
+project(SignalGeneratorIntegrationTests VERSION 0.1 LANGUAGES CXX)
 
 enable_language(C CXX ASM)
 
-add_executable(${CMAKE_PROJECT_NAME} 
-    #main.c
-    #test_utils.c
-    #dwf/device.c 
-    #dwf/uart.c 
-    #dwf/scope.c
+add_executable(${CMAKE_PROJECT_NAME}
     Main.cpp
     dwf/DwfDeviceHandler.cpp
     dwf/Oscilloscope.cpp

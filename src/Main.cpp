@@ -1,62 +1,36 @@
+#include "cmd/CommandParser.hpp"
+#include "cmd/Command.hpp"
 #include "peripherals/Peripherals.hpp"
-#include "waves/Frequency.hpp"
-#include "waves/WaveFactory.hpp"
-#include "waves/WaveForm.hpp"
+#include "signals/Frequency.hpp"
+#include "signals/Level.hpp"
+#include "signals/SignalFactory.hpp"
+#include "signals/WaveForm.hpp"
 #include <iostream>
-#include <memory>
-#include <sstream>
-#include <stdexcept>
 #include <string>
 
 using namespace std;
 
-// Max signal amplitude (value) for 12-bit DAC
-constexpr double amplitude = 0xfff;
-
 // Samples buffer
 vector<uint16_t> samples;
 
-void printUsageHelp() {
-  cout << "Usage: sine|square|saw|triangle " << minWaveFrequency << ".."
-       << maxWaveFrequency << "\n";
+void printCurrentSignalInfo(const Command &cmd) {
+  cout << "Generating " << cmd << " signal\n";
 }
 
-void printCurrentWaveInfo(WaveForm waveForm, uint16_t frequency) {
-  cout << "Generating " << frequency << "Hz " << waveFormToString(waveForm)
-       << " wave\n";
-}
-
-void stream(WaveForm waveForm, uint16_t frequency) {
-  samples = generateWavePeriod<uint16_t>(waveForm, samplingRate, frequency,
-                                         amplitude);
-  printCurrentWaveInfo(waveForm, frequency);
+void stream(const Command &cmd) {
+  samples = generateSignalPeriod<uint16_t>(cmd.waveForm, cmd.frequencyHz,
+                                           cmd.levelMV);
+  printCurrentSignalInfo(cmd);
 
   dacInstance.start(samples.data(), samples.size());
 }
 
-void parseAndApplyReceivedCommand(std::string str) {
-  std::istringstream iss(str);
-  std::string item;
-  std::vector<std::string> splitString;
-  while (std::getline(iss, item, ' ')) {
-    std::back_inserter(splitString) = item;
-  }
-
-  if (splitString.size() != 2) {
-    throw std::invalid_argument(
-        "Expecting two input parameters: wave and frequency");
-  }
-
-  WaveForm waveForm = stringToWaveForm(splitString[0]);
-  uint16_t frequency = stringToFrequency(splitString[1]);
-  stream(waveForm, frequency);
-}
-
-void tryParseAndApplyReceivedCommand(std::string str) {
+void parseAndApplyCommand(std::string str) {
   try {
-    parseAndApplyReceivedCommand(str);
-  } catch (const std::exception &) {
-    printUsageHelp();
+    const auto command = parseCommand(str);
+    stream(command);
+  } catch (const std::exception &e) {
+    cout << e.what() << "\n";
   }
 }
 
@@ -74,11 +48,13 @@ int main() {
   auto uart = getUARTPeripheral();
   uart->configure();
   uart->start();
-  uart->receive(&tryParseAndApplyReceivedCommand);
+  uart->receive(&parseAndApplyCommand);
 
   dacInstance.configure();
 
-  stream(defaultWaveForm, defaultWaveFrequency);
+  adcInstance.configure();
+
+  stream(defaultCommand);
 
   while (1) {
   }
