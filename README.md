@@ -37,7 +37,7 @@ TX **PC10**, RX **PC11**. Use this feature when external UART control is require
 
 ## Signal Level
 
-Built-in DAC produces signals with max voltage = `Vdda - 0.2V`, so for 3.3V supply it outputs signals with a peak-to-peak level ~3.1V and DC offset 1.55V.
+Built-in DAC produces signals with max voltage = `Vdda - 0.2V`, so for 3.3V supply it outputs signals with a peak-to-peak level 3.1V and DC offset 1.55V.
 
 Connect a capacitor to the DAC output pin to remove the DC offset and generate signals oscillating around 0V.
 
@@ -46,9 +46,9 @@ Connect a capacitor to the DAC output pin to remove the DC offset and generate s
 ### Command Syntax
 ```sh
 # WaveForm Frequency(Hz) Level(mV)
-sine|square|saw|triangle 10..30000 2..1500LF
+sine|square|saw|triangle 10..30000 200..1500LF
 ```
-Note that `LF(\n)` at the end is required.
+Siganl level is given without DC offset. Note that `LF(\n)` at the end is required.
 
 ### Sending Commands via Serial Port
 

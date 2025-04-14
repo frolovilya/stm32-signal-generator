@@ -61,9 +61,9 @@ void DACPeripheral::configureTimer() {
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // enable clock for TIM2
 
   // APB1 = 84MHz
-  // scaling to 48kHz
-  TIM2->PSC = 10 - 1;        // prescaler
-  TIM2->ARR = 175 - 1;       // period
+  // scaling to 500kHz
+  TIM2->PSC = 2 - 1;        // prescaler
+  TIM2->ARR = 84 - 1;       // period
   TIM2->CR1 &= ~TIM_CR1_CKD; // clock division by 1
 
   // TIM2->DIER |= TIM_DIER_UIE; // enable update interrupt
@@ -77,8 +77,7 @@ void DACPeripheral::configureTimer() {
 // DAC final clock frequency
 uint32_t DACPeripheral::getFrequency() const {
   // TODO: find better way of obtaining final frequency value
-  // return 84000000 / (TIM2->PSC + 1) / (TIM2->ARR + 1);
-  return 1000000;
+  return 84000000 / (TIM2->PSC + 1) / (TIM2->ARR + 1);
 }
 
 // Max signal amplitude (value) for 12-bit DAC

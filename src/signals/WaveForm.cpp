@@ -24,7 +24,7 @@ std::string waveFormToString(const WaveForm waveForm) {
     }
   }
 
-  throw std::logic_error("Unable to convert WaveForm enum to string");
+  throw std::logic_error("Unable to convert WaveForm to string");
 }
 
 /**
@@ -44,5 +44,5 @@ WaveForm stringToWaveForm(const std::string input) {
   }
 
   throw std::invalid_argument(
-      stringFormat("Unable to convert '%s' to WaveForm enum", input.c_str()));
+      stringFormat("Unable to convert '%s' to WaveForm", input.c_str()));
 }

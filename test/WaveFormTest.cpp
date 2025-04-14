@@ -27,9 +27,9 @@ BOOST_AUTO_TEST_CASE(stringToWaveFormSuccessTest) {
 
 BOOST_AUTO_TEST_CASE(stringToWaveFormExceptionTest) {
   checkConversionError(&stringToWaveForm, "SINE",
-                       "Unable to convert 'SINE' to WaveForm enum");
+                       "Unable to convert 'SINE' to WaveForm");
   checkConversionError(&stringToWaveForm, "",
-                       "Unable to convert '' to WaveForm enum");
+                       "Unable to convert '' to WaveForm");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
