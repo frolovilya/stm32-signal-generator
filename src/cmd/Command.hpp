@@ -17,6 +17,9 @@ struct Command {
   }
 };
 
+constexpr Command defaultCommand = {defaultWaveForm, defaultWaveFrequencyHz,
+                                    defaultLevelMV};
+
 std::ostream &operator<<(std::ostream &os, const Command &c);
 
 #endif

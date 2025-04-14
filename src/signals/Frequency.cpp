@@ -1,6 +1,6 @@
 #include "Frequency.hpp"
-#include "../../shared/StringFormat.hpp"
 #include "../peripherals/Peripherals.hpp"
+#include "../shared/StringFormat.hpp"
 #include <format>
 #include <stdexcept>
 

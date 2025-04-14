@@ -3,7 +3,7 @@
 
 #include "Command.hpp"
 
-void printUsageHelp();
-Command tryParseCommand(const std::string str);
+std::string getUsageHelp();
+Command parseCommand(const std::string str);
 
 #endif

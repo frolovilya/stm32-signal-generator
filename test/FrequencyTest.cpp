@@ -1,6 +1,6 @@
 #include "../src/signals/Frequency.hpp"
-#include "../shared/StringFormat.hpp"
 #include "../src/peripherals/Peripherals.hpp"
+#include "../src/shared/StringFormat.hpp"
 #include "ExceptionCheck.hpp"
 #include <boost/test/unit_test.hpp>
 #include <functional>

@@ -1,4 +1,5 @@
 #include "cmd/CommandParser.hpp"
+#include "cmd/Command.hpp"
 #include "peripherals/Peripherals.hpp"
 #include "signals/Frequency.hpp"
 #include "signals/Level.hpp"
@@ -12,24 +13,25 @@ using namespace std;
 // Samples buffer
 vector<uint16_t> samples;
 
-void printCurrentSignalInfo(WaveForm waveForm, uint16_t frequency,
-                            uint16_t level) {
-  cout << "Generating " << waveFormToString(waveForm) << " " << frequency
-       << "Hz "
-       << " " << level << "mV"
-       << " signal\n";
+void printCurrentSignalInfo(const Command &cmd) {
+  cout << "Generating " << cmd << " signal\n";
 }
 
-void stream(WaveForm waveForm, uint16_t frequency, uint16_t level) {
-  samples = generateSignalPeriod<uint16_t>(waveForm, frequency, level);
-  printCurrentSignalInfo(waveForm, frequency, level);
+void stream(const Command &cmd) {
+  samples = generateSignalPeriod<uint16_t>(cmd.waveForm, cmd.frequencyHz,
+                                           cmd.levelMV);
+  printCurrentSignalInfo(cmd);
 
   dacInstance.start(samples.data(), samples.size());
 }
 
 void parseAndApplyCommand(std::string str) {
-  const auto command = tryParseCommand(str);
-  stream(command.waveForm, command.frequencyHz, command.levelMV);
+  try {
+    const auto command = parseCommand(str);
+    stream(command);
+  } catch (const std::exception &e) {
+    cout << e.what() << "\n";
+  }
 }
 
 UARTPeripheral *getUARTPeripheral() {
@@ -52,7 +54,7 @@ int main() {
 
   adcInstance.configure();
 
-  stream(defaultWaveForm, defaultWaveFrequencyHz, defaultLevelMV);
+  stream(defaultCommand);
 
   while (1) {
   }

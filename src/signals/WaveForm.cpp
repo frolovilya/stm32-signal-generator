@@ -1,5 +1,5 @@
 #include "WaveForm.hpp"
-#include "../../shared/StringFormat.hpp"
+#include "../shared/StringFormat.hpp"
 
 static const struct {
   WaveForm val;

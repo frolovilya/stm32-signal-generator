@@ -1,6 +1,6 @@
 #include "../src/signals/Level.hpp"
-#include "../shared/StringFormat.hpp"
 #include "../src/peripherals/Peripherals.hpp"
+#include "../src/shared/StringFormat.hpp"
 #include "ExceptionCheck.hpp"
 #include <boost/test/unit_test.hpp>
 #include <functional>
@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(stringToLevelExceptionTest) {
                        exceptionMesage);
   checkConversionError(&stringToLevelMV, "-1", exceptionMesage);
   checkConversionError(&stringToLevelMV, "0", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "9", exceptionMesage);
+  checkConversionError(&stringToLevelMV, "1", exceptionMesage);
   checkConversionError(&stringToLevelMV, "2000", exceptionMesage);
   checkConversionError(&stringToLevelMV, "100000000000000000000",
                        exceptionMesage);
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(stringToLevelExceptionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(stringToLevelSuccessTest) {
-  BOOST_TEST(stringToLevelMV("10") == 10);
+  BOOST_TEST(stringToLevelMV("2") == 2);
   BOOST_TEST(stringToLevelMV("12") == 12);
   BOOST_TEST(stringToLevelMV("123") == 123);
   BOOST_TEST(stringToLevelMV("1234") == 1234);

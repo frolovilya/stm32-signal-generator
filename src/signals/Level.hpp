@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-constexpr uint16_t minLevelMV = 10;
+constexpr uint16_t minLevelMV = 2;
 uint16_t getMaxLevelMV();
 constexpr uint16_t defaultLevelMV = 1000;
 

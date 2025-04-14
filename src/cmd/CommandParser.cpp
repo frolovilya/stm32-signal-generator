@@ -1,4 +1,5 @@
 #include "CommandParser.hpp"
+#include "../shared/StringFormat.hpp"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -8,10 +9,13 @@
 
 using namespace std;
 
-void printUsageHelp() {
-  cout << "Usage: sine|square|saw|triangle [" << minWaveFrequencyHz << ".."
-       << maxWaveFrequencyHz << "](Hz) [" << minLevelMV << ".." << getMaxLevelMV()
-       << "](mV)\n";
+std::string getUsageHelp() {
+  return stringFormat("Expecting three arguments: WaveForm Frequency Level\n"
+                      "Where WaveForm: sine|square|saw|triangle; Frequency, "
+                      "Hz: %d..%d; Level, mV: %d..%d\n"
+                      "Example: sine 440 1000",
+                      minWaveFrequencyHz, maxWaveFrequencyHz, minLevelMV,
+                      getMaxLevelMV());
 }
 
 Command parseCommand(const std::string str) {
@@ -23,8 +27,7 @@ Command parseCommand(const std::string str) {
   }
 
   if (splitString.size() != 3) {
-    throw std::invalid_argument(
-        "Expecting three input parameters: wave, frequency, level");
+    throw std::invalid_argument(getUsageHelp());
   }
 
   WaveForm waveForm = stringToWaveForm(splitString[0]);
@@ -32,19 +35,4 @@ Command parseCommand(const std::string str) {
   uint16_t level = stringToLevelMV(splitString[2]);
 
   return {waveForm, frequency, level};
-}
-
-constexpr Command defaultCommand() {
-  return {defaultWaveForm, defaultWaveFrequencyHz, defaultLevelMV};
-}
-
-Command tryParseCommand(const std::string str) {
-  try {
-    return parseCommand(str);
-  } catch (const std::exception &e) {
-    cout << e.what() << "\n";
-    printUsageHelp();
-
-    return defaultCommand();
-  }
 }

@@ -7,10 +7,8 @@
 #include <string>
 
 template <typename T>
-void checkConversionError(
-    //     std::function<T(const std::string)> conversionFunction,
-    T&& conversionFunction,
-    const std::string input, const std::string expectedExceptionText) {
+void checkConversionError(T &&conversionFunction, const std::string input,
+                          const std::string expectedExceptionText) {
   try {
     auto f = std::function(std::forward<T>(conversionFunction));
     f(input);

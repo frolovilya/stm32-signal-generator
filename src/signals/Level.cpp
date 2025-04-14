@@ -1,6 +1,6 @@
 #include "Level.hpp"
-#include "../../shared/StringFormat.hpp"
 #include "../peripherals/Peripherals.hpp"
+#include "../shared/StringFormat.hpp"
 #include <stdexcept>
 
 uint16_t getMaxLevelMV() { return adcInstance.getVddaMV() / 2; }
