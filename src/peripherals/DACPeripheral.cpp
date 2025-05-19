@@ -61,9 +61,9 @@ void DACPeripheral::configureTimer() {
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // enable clock for TIM2
 
   // APB1 = 84MHz
-  // scaling to 1MHz
+  // scaling to ~192kHz
   TIM2->PSC = 1 - 1;        // prescaler
-  TIM2->ARR = 84 - 1;       // period
+  TIM2->ARR = 437 - 1;       // period
   TIM2->CR1 &= ~TIM_CR1_CKD; // clock division by 1
 
   // TIM2->DIER |= TIM_DIER_UIE; // enable update interrupt

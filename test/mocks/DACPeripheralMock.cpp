@@ -1,7 +1,7 @@
 #include "../../src/peripherals/DACPeripheral.hpp"
 #include <cstdint>
 
-uint32_t DACPeripheral::getFrequency() const { return 1000000; }
+uint32_t DACPeripheral::getFrequency() const { return 192000; }
 
 DAC_TypeDef *DACPeripheral::getPeripheral() const { return nullptr; };
 

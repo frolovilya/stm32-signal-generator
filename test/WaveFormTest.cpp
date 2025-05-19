@@ -28,6 +28,8 @@ BOOST_AUTO_TEST_CASE(stringToWaveFormSuccessTest) {
 BOOST_AUTO_TEST_CASE(stringToWaveFormExceptionTest) {
   checkConversionError(&stringToWaveForm, "SINE",
                        "Unable to convert 'SINE' to WaveForm");
+  checkConversionError(&stringToWaveForm, "dc",
+                       "Unable to convert 'dc' to WaveForm");
   checkConversionError(&stringToWaveForm, "",
                        "Unable to convert '' to WaveForm");
 }

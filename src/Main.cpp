@@ -19,7 +19,7 @@ void printCurrentSignalInfo(const Command &cmd) {
 
 void stream(const Command &cmd) {
   samples = generateSignalPeriod<uint16_t>(cmd.waveForm, cmd.frequencyHz,
-                                           cmd.levelMV);
+                                           cmd.levelMv);
   printCurrentSignalInfo(cmd);
 
   dacInstance.start(samples.data(), samples.size());

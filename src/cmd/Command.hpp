@@ -9,16 +9,16 @@
 struct Command {
   WaveForm waveForm;
   uint16_t frequencyHz;
-  uint16_t levelMV;
+  uint16_t levelMv;
 
   bool operator==(Command const &c) const {
     return waveForm == c.waveForm && frequencyHz == c.frequencyHz &&
-           levelMV == c.levelMV;
+           levelMv == c.levelMv;
   }
 };
 
 constexpr Command defaultCommand = {defaultWaveForm, defaultWaveFrequencyHz,
-                                    defaultLevelMV};
+                                    defaultLevelMv};
 
 std::ostream &operator<<(std::ostream &os, const Command &c);
 

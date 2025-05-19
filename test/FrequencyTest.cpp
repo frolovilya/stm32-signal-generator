@@ -31,12 +31,14 @@ BOOST_AUTO_TEST_CASE(stringToFrequencyExceptionTest) {
 
 BOOST_AUTO_TEST_CASE(stringToFrequencySuccessTest) {
   BOOST_TEST(stringToFrequencyHz("20") == 20);
+  BOOST_TEST(stringToFrequencyHz("20hz") == 20);
+  BOOST_TEST(stringToFrequencyHz("20Hz") == 20);
   BOOST_TEST(stringToFrequencyHz("21") == 21);
   BOOST_TEST(stringToFrequencyHz("123") == 123);
   BOOST_TEST(stringToFrequencyHz("1234") == 1234);
   BOOST_TEST(stringToFrequencyHz("12345") == 12345);
-  BOOST_TEST(stringToFrequencyHz("29999") == 29999);
-  BOOST_TEST(stringToFrequencyHz("30000") == 30000);
+  BOOST_TEST(stringToFrequencyHz("19999") == 19999);
+  BOOST_TEST(stringToFrequencyHz("20000") == 20000);
 }
 
 BOOST_AUTO_TEST_CASE(getSamplingRateTest) {

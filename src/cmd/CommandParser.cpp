@@ -10,14 +10,9 @@
 using namespace std;
 
 std::string getUsageHelp() {
-  return stringFormat("Expecting three arguments: WaveForm Frequency Level\n"
-                      "Where WaveForm: sine|square|saw|triangle; Frequency, "
-                      "Hz: %d..%d; Level, mV: %d..%d\n"
-                      "Example: %s %d %d",
-                      minWaveFrequencyHz, maxWaveFrequencyHz, minLevelMV,
-                      getMaxLevelMV(),
-                      waveFormToString(defaultCommand.waveForm).c_str(),
-                      defaultCommand.frequencyHz, defaultCommand.levelMV);
+  return "Usage: {sine|square|saw|triangle} frequency[Hz] "
+         "level{[mV]|mVRMS|dBV|dBu}\n"
+         "Example: sine 440hz -10dbv";
 }
 
 /**
@@ -37,7 +32,7 @@ Command parseCommand(const std::string str) {
 
   WaveForm waveForm = stringToWaveForm(splitString[0]);
   uint16_t frequency = stringToFrequencyHz(splitString[1]);
-  uint16_t level = stringToLevelMV(splitString[2]);
+  uint16_t level = stringToLevelMv(splitString[2]);
 
   return {waveForm, frequency, level};
 }
