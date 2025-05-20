@@ -85,23 +85,24 @@ picocom --echo --omap crlf --imap lfcrlf,bsdel -b 115200 /dev/tty.usbmodem14203
 sine 440Hz -10dBV
 # Generating sine, 440Hz, 316mV RMS (-10dBV) signal
 ```
-![sine-440](https://github.com/frolovilya/stm32-wave-generator/assets/271293/2d8baa18-3032-44dd-9d15-85e10a6b2b6a)
+![sine_440hz_-10dbv](https://github.com/user-attachments/assets/1925593c-31f5-4691-a3b7-53ece372517e)
 
 ```sh
-square 1kHz 500mVRMS
-# Generating square, 1000Hz, 500mV RMS (-6dBV) signal
+square 100Hz 200mVRMS
+# Generating square, 100Hz, 200mV RMS (-6dBV) signal
 ```
-![square-200](https://github.com/frolovilya/stm32-wave-generator/assets/271293/21c3fa6d-4aa2-480e-95d7-ad2351046e58)
+![square_100hz_200mvrms](https://github.com/user-attachments/assets/a05db5b7-fbab-47e8-8607-d976f56e84ea)
 
 ```sh
-saw 300Hz 0dBV
-# Generating saw, 300Hz, 1000mV RMS (0dBV) signal
+saw 1kHz 100mV
+# Generating saw, 1000Hz, 71mV RMS (-23dBV) signal
 ```
-![saw-300](https://github.com/frolovilya/stm32-wave-generator/assets/271293/c1e2de59-1d40-44a9-82bd-15b46a5f6384)
+![saw_1khz_100mv](https://github.com/user-attachments/assets/9e49967f-9c1d-46f3-a057-edd30b5e076f)
 
 ```sh
-triangle 10kHz 0dBU
-# Generating triangle, 10000Hz, 775mV RMS (-2dBV) signal
+triangle 10kHz -3dbU
+# Generating triangle, 10000Hz, 548mV RMS (-5dBV) signal
 ```
-![triangle-600](https://github.com/frolovilya/stm32-wave-generator/assets/271293/79b30d67-fb2d-41dc-8336-3c95391298d8)
+![triangle_10khz_-3dbu](https://github.com/user-attachments/assets/f3beac80-271a-467f-bb1f-852cbff72d5c)
+
 
