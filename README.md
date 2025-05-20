@@ -63,8 +63,6 @@ Note that `LF(\n)` at the end is required.
 
 Supported frequency is in the range from 20Hz to 20000Hz.
 
-Signal level is provided without DC offset. 
-
 ### Sending Commands via Serial Port
 
 When using Nucleo board or any UART to USB adapter it's possible to send commands via a serial port.
