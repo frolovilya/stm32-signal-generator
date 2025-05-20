@@ -25,8 +25,8 @@ BOOST_AUTO_TEST_CASE(parseCommandSuccessTest) {
   BOOST_TEST(parseCommand("square 50 555") ==
              Command(WaveForm::SQUARE, 50, 555));
 
-  BOOST_TEST(parseCommand("saw 25000 1450") ==
-             Command(WaveForm::SAW, 25000, 1450));
+  BOOST_TEST(parseCommand("saw 15000 1450") ==
+             Command(WaveForm::SAW, 15000, 1450));
 
   BOOST_TEST(parseCommand("triangle 444 999") ==
              Command(WaveForm::TRIANGLE, 444, 999));
@@ -43,9 +43,10 @@ BOOST_AUTO_TEST_CASE(parseCommandExceptionTest) {
                    minWaveFrequencyHz, maxWaveFrequencyHz);
   checkConversionError(&parseCommand, "sine 500000 1000", frequencyRange);
 
-  const std::string levelRange =
-      stringFormat("Signal level must be in the range from %d to %d mV",
-                   minLevelMV, getMaxLevelMV());
+  const std::string levelRange = stringFormat(
+      "Signal level must be in the range from %d to %d mV (%d to %d dBV)",
+      minLevelMv, getMaxLevelMv(), mvToDbv(minLevelMv),
+      mvToDbv(getMaxLevelMv()));
   checkConversionError(&parseCommand, "sine 440 220000", levelRange);
 }
 

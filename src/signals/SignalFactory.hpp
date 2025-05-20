@@ -1,5 +1,5 @@
-#ifndef WAVEFACTORY_HPP
-#define WAVEFACTORY_HPP
+#ifndef SIGNALFACTORY_HPP
+#define SIGNALFACTORY_HPP
 
 #include "Frequency.hpp"
 #include "Level.hpp"

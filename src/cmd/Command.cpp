@@ -4,7 +4,7 @@
 
 std::ostream &operator<<(std::ostream &os, const Command &c) {
   os << waveFormToString(c.waveForm) << ", " << c.frequencyHz << "Hz, "
-     << c.levelMV << "mV";
+     << mvPeakToMvRms(c.levelMv) << "mV RMS (" << mvToDbv(c.levelMv) << "dBV)";
 
   return os;
 }

@@ -1,6 +1,7 @@
 #ifndef EXCEPTIONCHECK_HPP
 #define EXCEPTIONCHECK_HPP
 
+#include "../src/shared/StringFormat.hpp"
 #include <boost/test/unit_test.hpp>
 #include <cstdint>
 #include <functional>
@@ -12,7 +13,8 @@ void checkConversionError(T &&conversionFunction, const std::string input,
   try {
     auto f = std::function(std::forward<T>(conversionFunction));
     f(input);
-    BOOST_ERROR("Expecting conversion to fail");
+    BOOST_ERROR(stringFormat("Expecting conversion '%s' to fail with '%s'",
+                             input.c_str(), expectedExceptionText.c_str()));
   } catch (const std::exception &e) {
     BOOST_TEST(e.what() == expectedExceptionText);
   }

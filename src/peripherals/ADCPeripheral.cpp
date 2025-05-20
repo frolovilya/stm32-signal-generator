@@ -42,6 +42,6 @@ uint16_t ADCPeripheral::getVRefIntCalibrated() const {
 /**
  * Calculate Vdda (mV) based on Vrefint and Vrefint_calibrated
  */
-uint16_t ADCPeripheral::getVddaMV() {
+uint16_t ADCPeripheral::getVddaMv() {
     return vRefIntCalibratedVoltageMV * getVRefIntCalibrated() / getVRefInt();
 }

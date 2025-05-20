@@ -8,43 +8,84 @@
 BOOST_AUTO_TEST_SUITE(LevelTest)
 
 BOOST_AUTO_TEST_CASE(stringToLevelExceptionTest) {
-  const std::string exceptionMesage =
-      stringFormat("Signal level must be in the range from %d to %d mV",
-                   minLevelMV, getMaxLevelMV());
+  const std::string exceptionMesage = stringFormat(
+      "Signal level must be in the range from %d to %d mV (%d to %d dBV)",
+      minLevelMv, getMaxLevelMv(), mvToDbv(minLevelMv),
+      mvToDbv(getMaxLevelMv()));
 
-  checkConversionError(&stringToLevelMV, "-100000000000000000000",
-                       exceptionMesage);
-  checkConversionError(&stringToLevelMV, "-1", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "0", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "1", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "2000", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "100000000000000000000",
-                       exceptionMesage);
+  std::string invalidInputs[] = {"-100000000000000000000",
+                                 "-1",
+                                 "0",
+                                 "2000",
+                                 "100000000000000000000",
+                                 "1 mV",
+                                 "10v",
+                                 "10db",
+                                 "10dbp",
+                                 "1.234",
+                                 "0x1",
+                                 "thousand",
+                                 ""};
 
-  checkConversionError(&stringToLevelMV, "1mV", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "1 mV", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "0x1", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "thousand", exceptionMesage);
-  checkConversionError(&stringToLevelMV, "", exceptionMesage);
+  for (const std::string &input : invalidInputs) {
+    checkConversionError(&stringToLevelMv, input, exceptionMesage);
+  }
 }
 
-BOOST_AUTO_TEST_CASE(stringToLevelSuccessTest) {
-  BOOST_TEST(stringToLevelMV("200") == 200);
-  BOOST_TEST(stringToLevelMV("1234") == 1234);
+BOOST_AUTO_TEST_CASE(stringToLevelMvSuccessTest) {
+  BOOST_TEST(stringToLevelMv("1") == 1);
+  BOOST_TEST(stringToLevelMv("1mv") == 1);
+  BOOST_TEST(stringToLevelMv("1mV") == 1);
+
+  BOOST_TEST(stringToLevelMv("23") == 23);
+  BOOST_TEST(stringToLevelMv("23mv") == 23);
+
+  BOOST_TEST(stringToLevelMv("456") == 456);
+  BOOST_TEST(stringToLevelMv("456mv") == 456);
+
+  BOOST_TEST(stringToLevelMv("1234") == 1234);
+  BOOST_TEST(stringToLevelMv("1234mv") == 1234);
+
+  BOOST_TEST(stringToLevelMv("0dbv") == 1414);
+  BOOST_TEST(stringToLevelMv("-10dbv") == 447);
+
+  BOOST_TEST(stringToLevelMv("0dbu") == 1096);
+  BOOST_TEST(stringToLevelMv("2dbu") == 1379);
+
+  BOOST_TEST(stringToLevelMv("1000mv") == 1000);
+  BOOST_TEST(stringToLevelMv("1000mvrms") == 1414);
+}
+
+BOOST_AUTO_TEST_CASE(dbvToMvConversionTest) {
+  BOOST_TEST(dbvToMv(0) == 1414);
+  BOOST_TEST(dbvToMv(4) == 2242);
+  BOOST_TEST(dbvToMv(-10) == 447);
+  BOOST_TEST(dbvToMv(-45) == 8);
+}
+
+BOOST_AUTO_TEST_CASE(dbuToMvConversionTest) {
+  BOOST_TEST(dbuToMv(0) == mvRmsToMvPeak(775));
+  BOOST_TEST(dbuToMv(4) == 1737);
+  BOOST_TEST(dbuToMv(-10) == 346);
+}
+
+BOOST_AUTO_TEST_CASE(mvRmsToMvConversionTest) {
+  BOOST_TEST(mvRmsToMvPeak(1000) == 1414);
+  BOOST_TEST(mvPeakToMvRms(1414) == 1000);
 }
 
 BOOST_AUTO_TEST_CASE(getMaxLevelTest) {
-  BOOST_TEST(getMaxLevelMV() == (adcInstance.getVddaMV() - 200) / 2);
+  BOOST_TEST(getMaxLevelMv() == adcInstance.getVddaMv() / 2);
 }
 
 BOOST_AUTO_TEST_CASE(getPeakToPeakTest) {
-  BOOST_TEST(getPeakToPeakDigitalValue(getMaxLevelMV()) ==
+  BOOST_TEST(getPeakToPeakDigitalValue(getMaxLevelMv()) ==
              dacInstance.getMaxDigitalValue());
-  BOOST_TEST(getPeakToPeakDigitalValue(getMaxLevelMV() / 2) ==
+  BOOST_TEST(getPeakToPeakDigitalValue(getMaxLevelMv() / 2) ==
              dacInstance.getMaxDigitalValue() / 2);
   BOOST_TEST(
       getPeakToPeakDigitalValue(1000) ==
-      (uint16_t)(1000.0 / getMaxLevelMV() * dacInstance.getMaxDigitalValue()));
+      (uint16_t)(1000.0 / getMaxLevelMv() * dacInstance.getMaxDigitalValue()));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
