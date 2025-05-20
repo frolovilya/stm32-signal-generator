@@ -13,35 +13,36 @@ BOOST_AUTO_TEST_CASE(stringToLevelExceptionTest) {
       minLevelMv, getMaxLevelMv(), mvToDbv(minLevelMv),
       mvToDbv(getMaxLevelMv()));
 
-  checkConversionError(&stringToLevelMv, "-100000000000000000000",
-                       exceptionMesage);
-  checkConversionError(&stringToLevelMv, "-1", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "0", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "2000", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "100000000000000000000",
-                       exceptionMesage);
+  std::string invalidInputs[] = {"-100000000000000000000",
+                                 "-1",
+                                 "0",
+                                 "2000",
+                                 "100000000000000000000",
+                                 "1 mV",
+                                 "10v",
+                                 "10db",
+                                 "10dbp",
+                                 "1.234",
+                                 "0x1",
+                                 "thousand",
+                                 ""};
 
-  checkConversionError(&stringToLevelMv, "1 mV", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "10v", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "10db", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "10dbp", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "1.234", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "0x1", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "thousand", exceptionMesage);
-  checkConversionError(&stringToLevelMv, "", exceptionMesage);
+  for (const std::string &input : invalidInputs) {
+    checkConversionError(&stringToLevelMv, input, exceptionMesage);
+  }
 }
 
 BOOST_AUTO_TEST_CASE(stringToLevelMvSuccessTest) {
   BOOST_TEST(stringToLevelMv("1") == 1);
   BOOST_TEST(stringToLevelMv("1mv") == 1);
   BOOST_TEST(stringToLevelMv("1mV") == 1);
-  
+
   BOOST_TEST(stringToLevelMv("23") == 23);
   BOOST_TEST(stringToLevelMv("23mv") == 23);
 
   BOOST_TEST(stringToLevelMv("456") == 456);
   BOOST_TEST(stringToLevelMv("456mv") == 456);
-  
+
   BOOST_TEST(stringToLevelMv("1234") == 1234);
   BOOST_TEST(stringToLevelMv("1234mv") == 1234);
 

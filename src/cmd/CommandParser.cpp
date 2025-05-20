@@ -10,7 +10,7 @@
 using namespace std;
 
 std::string getUsageHelp() {
-  return "Usage: {sine|square|saw|triangle} frequency[Hz] "
+  return "Usage: {sine|square|saw|triangle} frequency{[Hz]|kHz} "
          "level{[mV]|mVRMS|dBV|dBu}\n"
          "Example: sine 440hz -10dbv";
 }

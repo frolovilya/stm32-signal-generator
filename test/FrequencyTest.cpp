@@ -12,21 +12,24 @@ BOOST_AUTO_TEST_CASE(stringToFrequencyExceptionTest) {
       stringFormat("Frequency must be in the range from %d to %d Hz",
                    minWaveFrequencyHz, maxWaveFrequencyHz);
 
-  checkConversionError(&stringToFrequencyHz, "-100000000000000000000",
-                       exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "-1", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "0", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "19", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "30001", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "100000", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "100000000000000000000",
-                       exceptionMesage);
+  std::string invalidInputs[] = {"-100000000000000000000",
+                                 "-100",
+                                 "-1",
+                                 "0",
+                                 "19",
+                                 "30001",
+                                 "100000",
+                                 "100000000000000000000",
+                                 "1Hz",
+                                 "1 Hz",
+                                 "1MHz",
+                                 "0x1",
+                                 "fifty",
+                                 ""};
 
-  checkConversionError(&stringToFrequencyHz, "1Hz", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "1 Hz", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "0x1", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "fifty", exceptionMesage);
-  checkConversionError(&stringToFrequencyHz, "", exceptionMesage);
+  for (const std::string &input : invalidInputs) {
+    checkConversionError(&stringToFrequencyHz, input, exceptionMesage);
+  }
 }
 
 BOOST_AUTO_TEST_CASE(stringToFrequencySuccessTest) {
@@ -35,10 +38,13 @@ BOOST_AUTO_TEST_CASE(stringToFrequencySuccessTest) {
   BOOST_TEST(stringToFrequencyHz("20Hz") == 20);
   BOOST_TEST(stringToFrequencyHz("21") == 21);
   BOOST_TEST(stringToFrequencyHz("123") == 123);
+  BOOST_TEST(stringToFrequencyHz("1kHz") == 1000);
   BOOST_TEST(stringToFrequencyHz("1234") == 1234);
   BOOST_TEST(stringToFrequencyHz("12345") == 12345);
+  BOOST_TEST(stringToFrequencyHz("15kHz") == 15000);
   BOOST_TEST(stringToFrequencyHz("19999") == 19999);
   BOOST_TEST(stringToFrequencyHz("20000") == 20000);
+  BOOST_TEST(stringToFrequencyHz("20kHz") == 20000);
 }
 
 BOOST_AUTO_TEST_CASE(getSamplingRateTest) {

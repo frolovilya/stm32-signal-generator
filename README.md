@@ -40,7 +40,7 @@ TX **PC10**, RX **PC11**. Use this feature when external UART control is require
 Built-in DAC produces signals with max voltage = Vdda, so for 3.3V supply it outputs signals with a peak-to-peak level 3.3V and DC offset 1.65V. Connect a capacitor to the DAC output pin to remove the DC offset and generate signals oscillating around 0V with a peak output of 1dBV.
 
 Typical levels:
-* Consumer line: -10dBV
+* Line: -10dBV
 * Pro line: 4dBu
 * Phono: -45dBV
 
@@ -48,16 +48,16 @@ Below is the conversion table of the supported level units:
 
 | Unit    | Conversion from mV peak  |
 | ---     | ---                      |
-| mV RMS  | mV / sqrt(2)             |
-| dBV     | 20 * log(mV / sqrt(2))   |
-| dBu     | 20 * log(mV / sqrt(2) / 0.775) |
+| mV_RMS  | mV / sqrt(2)             |
+| dBV     | 20 * log(mV_RMS)         |
+| dBu     | 20 * log(mV_RMS / 0.775) |
 
 ## Usage
 
 ### Command Syntax
 ```sh
 # WaveForm Frequency(Hz) Level(mV)
-{sine|square|saw|triangle} frequency[Hz] level{[mV]|mVRMS|dBV|dBu}LF
+{sine|square|saw|triangle} frequency{[Hz]|kHz} level{[mV]|mVRMS|dBV|dBu}LF
 ```
 Note that `LF(\n)` at the end is required.
 
@@ -77,31 +77,31 @@ brew install picocom
 ls /dev/tty.*
 
 # Start session (press Ctrl+a Ctrl+x to exit)
-picocom --echo --omap crlf --imap lfcrlf -b 115200 /dev/tty.usbmodem14203
+picocom --echo --omap crlf --imap lfcrlf,bsdel -b 115200 /dev/tty.usbmodem14203
 ```
 
-### Examples
+## Examples
 ```sh
-# Generating 440Hz, 1500mV sine signal
-sine 440 1500
+sine 440Hz -10dBV
+# Generating sine, 440Hz, 316mV RMS (-10dBV) signal
 ```
 ![sine-440](https://github.com/frolovilya/stm32-wave-generator/assets/271293/2d8baa18-3032-44dd-9d15-85e10a6b2b6a)
 
 ```sh
-# Generating 200Hz, 1500mV square signal
-square 200 1500
+square 1kHz 500mVRMS
+# Generating square, 1000Hz, 500mV RMS (-6dBV) signal
 ```
 ![square-200](https://github.com/frolovilya/stm32-wave-generator/assets/271293/21c3fa6d-4aa2-480e-95d7-ad2351046e58)
 
 ```sh
-# Generating 300Hz, 1500mV saw signal
-saw 300 1500
+saw 300Hz 0dBV
+# Generating saw, 300Hz, 1000mV RMS (0dBV) signal
 ```
 ![saw-300](https://github.com/frolovilya/stm32-wave-generator/assets/271293/c1e2de59-1d40-44a9-82bd-15b46a5f6384)
 
 ```sh
-# Generating 600Hz, 1500mV triangle signal
-triangle 600 1500
+triangle 10kHz 0dBU
+# Generating triangle, 10000Hz, 775mV RMS (-2dBV) signal
 ```
 ![triangle-600](https://github.com/frolovilya/stm32-wave-generator/assets/271293/79b30d67-fb2d-41dc-8336-3c95391298d8)
 
